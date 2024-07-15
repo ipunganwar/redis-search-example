@@ -16,6 +16,9 @@ app.get("/search", async (c) => {
   const { UPSTASH_REDIS_REST_TOKEN, UPSTASH_REDIS_REST_URL } =
     env<EnvConfig>(c);
 
+  const start = performance.now();
+  // ==================================
+
   const redis = new Redis({
     token: UPSTASH_REDIS_REST_TOKEN,
     url: UPSTASH_REDIS_REST_URL,
@@ -43,9 +46,12 @@ app.get("/search", async (c) => {
       }
     }
   }
+  // ==================================
+  const end = performance.now();
 
   return c.json({
-    message: "Hello Next.js!",
+    results: res,
+    duration: end - start,
   });
 });
 
